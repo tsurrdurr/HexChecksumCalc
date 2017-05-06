@@ -3,7 +3,7 @@ def main():
         print(">>")
         text = str(input("Enter cmd: ")).upper()
         text = get_new_hex(text)
-        return text
+        print(text)
 
 def add_colon(text):
     text = text.strip()
@@ -14,18 +14,26 @@ def add_colon(text):
 def get_new_hex(text):
     try:
         text = add_colon(text)
-        result = get_checksum(text).upper()
+        result = get_checksum(text)
+        if (result == "Too short" or result == "Too long"):
+            return result
+        result = result.upper()
         if (result[-2:] == text[-2:]):
             return "Checksum correct"
         else:
-            return "Line with new checksum: " + text[:-2] + result[-2:]
+            return text[:-2] + result[-2:]
     except Exception:
         return "Bad input"
 
 def get_checksum(text):
     byte_count = int(text[1:3], 16)
-
-    address = str(text[3:9 + byte_count*2])
+    part_length = byte_count*2
+    length = str(text).__len__()
+    if(length < 9 + part_length):
+        return "Too short"
+    if(length > 11 + part_length):
+        return "Too long"
+    address = str(text[3:9 + part_length])
     i = 0
     sum = byte_count
     while(i < len(address)):

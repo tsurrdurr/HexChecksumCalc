@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html>
 <body>
-<textarea id="textfield"></textarea>
+<p>
+Initial HEX: <textarea id="inputtext" ></textarea></p>
+<p>
 <button type="submit" id="script-button">
     Recalculate checksum
 </button>
+</p>
+<p>
+Result HEX: <textarea id="outputtext"></textarea>
+</p>
 
 <script>
 function runScript() {
-    source_text = document.getElementById('textfield').value;
+    source_text = document.getElementById('inputtext').value;
     var request = new XMLHttpRequest();
     request.onreadystatechange = function() {
         if (request.readyState === 4) {
             if (request.status === 200) {
-                document.getElementById('textfield').value = request.responseText;
+                document.getElementById('outputtext').value = request.responseText;
             } else {
                 alert('Error: ' + request.responseText);
             }
         }
     };
-    request.open('POST', '/get_chsum/' + source_text, true);
-    request.send(null);
+    if(source_text != "")
+    {
+        request.open('POST', '/get_chsum/' + source_text, true);
+        request.send(null);
+    }
     return false;  // Prevent the default button action
-};
-
+}
+document.getElementById('inputtext').onkeyup = runScript;
 document.getElementById('script-button').onclick = runScript;
 </script>
 
