@@ -2,14 +2,25 @@ def main():
     while(True):
         print(">>")
         text = str(input("Enter cmd: ")).upper()
-        return get_new_hex(text)
+        text = get_new_hex(text)
+        return text
+
+def add_colon(text):
+    text = text.strip()
+    if(text[0] != ':'):
+        text = ':' + text
+    return text
 
 def get_new_hex(text):
-    result = get_checksum(text).upper()
-    if (result[-2:] == text[-2:]):
-        return "Checksum correct"
-    else:
-        return "Line with new checksum: " + text[:-2] + result[-2:]
+    try:
+        text = add_colon(text)
+        result = get_checksum(text).upper()
+        if (result[-2:] == text[-2:]):
+            return "Checksum correct"
+        else:
+            return "Line with new checksum: " + text[:-2] + result[-2:]
+    except Exception:
+        return "Bad input"
 
 def get_checksum(text):
     byte_count = int(text[1:3], 16)
@@ -27,6 +38,5 @@ def get_checksum(text):
 
 def compliment(value):
     return (value ^ 0xFFFF) + 1
-
 
 if  __name__ =='__main__':main()
