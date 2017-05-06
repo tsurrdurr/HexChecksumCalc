@@ -2,11 +2,14 @@ def main():
     while(True):
         print(">>")
         text = str(input("Enter cmd: ")).upper()
-        result = get_checksum(text).upper()
-        if(result[-2:] == text[-2:]):
-            print("Checksum correct")
-        else:
-            print("Line with new checksum: " + text[:-2] + result[-2:])
+        return get_new_hex(text)
+
+def get_new_hex(text):
+    result = get_checksum(text).upper()
+    if (result[-2:] == text[-2:]):
+        return "Checksum correct"
+    else:
+        return "Line with new checksum: " + text[:-2] + result[-2:]
 
 def get_checksum(text):
     byte_count = int(text[1:3], 16)
