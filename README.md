@@ -1,14 +1,14 @@
 # HexChecksumCalc
 
-Small ultity with web-interface that allows to calculate Intel HEX hashes from HEX lines.
+Small utility with web-interface that allows to calculate Intel HEX hashes from HEX lines on the fly.
 
 ## Installation
 
-Download and install Flask from [official site](http://flask.pocoo.org/)
+It is a recommended practice to use [virtualenv](https://github.com/pypa/virtualenv) to set up environment for a project.
+Install dependencies with `pip install -r requirements.txt`
 
 ## Starting
 
-`python server.py`
+Run project with `python server.py`
 
-Run test with
-`python -m unittest discover`
+Run tests with `python -m unittest2 discover`
